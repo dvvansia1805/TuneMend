@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tune Mend - Music Therapy Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: relative;
+        }
+        .hello {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #ffeb3b;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        nav {
+            background-color: #444;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .main-content {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            gap: 20px; /* Adding equal gap between elements */
+        }
+        .container {
+            width: 20%;
+        }
+        .card-container {
+            width: 200px;
+            perspective: 1000px;
+        }
+        .page {
+            display: none;
+            padding: 25px;
+            font-size: 18px;
+            background-color: rgb(163, 179, 195);
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+        }
+        .page:first-child {
+            display: block; /* Show the first page initially */
+        }
+        .page h2 {
+            font-size: 24px;
+        }
+        .page button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #submitButton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .sidebar {
+            width: 300px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .box {
+            margin-bottom: 20px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to TuneMend</h1>
+    </header>
+    <nav>
+        <ul style="list-style-type: none; padding: 0;">
+            <li style="display: inline; margin: 0 10px;"><a href="#" style="color: white; text-decoration: none;">Home</a></li>
+            <li style="display: inline; margin: 0 10px;"><a href="#" style="color: white; text-decoration: none;">About</a></li>
+            <li style="display: inline; margin: 0 10px;"><a href="#" style="color: white; text-decoration: none;">Services</a></li>
+            <li style="display: inline; margin: 0 10px;"><a href="#" style="color: white; text-decoration: none;">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="main-content">
+        <div class="card-container">
+            <form action="/submit" method="post" id="surveyForm">
+                <!-- Page 1 -->
+                <div class="page" id="page1">
+                    <h2>Welcome to Tune Mend Survey</h2>
+                    <p>Answer the following questions to assess your mental health.</p>
+                    <button type="button" onclick="showPage(2)">Start</button>
+                </div>
+
+                <!-- Page 2: Question 1 -->
+                <div class="page" id="page2">
+                    <label>How often do you experience sleep issues?</label><br>
+                    <input type="radio" name="sleep_issues" value="0" required> Never<br>
+                    <input type="radio" name="sleep_issues" value="1"> Rarely<br>
+                    <input type="radio" name="sleep_issues" value="2"> Sometimes<br>
+                    <input type="radio" name="sleep_issues" value="3"> Often<br>
+                    <input type="radio" name="sleep_issues" value="4"> Always<br>
+                    <button type="button" onclick="showPage(3)">Next</button>
+                </div>
+
+                <!-- Page 3: Question 2 -->
+                <div class="page" id="page3">
+                    <label>How would you rate your mood changes?</label><br>
+                    <input type="radio" name="mood_changes" value="0" required> No noticeable changes<br>
+                    <input type="radio" name="mood_changes" value="1"> Occasional mood changes<br>
+                    <input type="radio" name="mood_changes" value="2"> Frequent mood changes<br>
+                    <input type="radio" name="mood_changes" value="3"> Persistent feelings of sadness/hopelessness<br>
+                    <button type="button" onclick="showPage(4)">Next</button>
+                </div>
+
+                <!-- Page 4: Question 3 -->
+                <div class="page" id="page4">
+                    <label>How would you rate your energy levels?</label><br>
+                    <input type="radio" name="energy_levels" value="1" required> 1<br>
+                    <input type="radio" name="energy_levels" value="2"> 2<br>
+                    <input type="radio" name="energy_levels" value="3"> 3<br>
+                    <input type="radio" name="energy_levels" value="4"> 4<br>
+                    <input type="radio" name="energy_levels" value="5"> 5<br>
+                    <input type="radio" name="energy_levels" value="6"> 6<br>
+                    <input type="radio" name="energy_levels" value="7"> 7<br>
+                    <input type="radio" name="energy_levels" value="8"> 8<br>
+                    <input type="radio" name="energy_levels" value="9"> 9<br>
+                    <input type="radio" name="energy_levels" value="10"> 10<br>
+                    <button type="button" onclick="showPage(5)">Next</button>
+                </div>
+
+                <!-- Page 5: Question 4 -->
+                <div class="page" id="page5">
+                    <label>How often do you experience difficulty concentrating?</label><br>
+                    <input type="radio" name="concentration" value="0" required> Never<br>
+                    <input type="radio" name="concentration" value="1"> Rarely<br>
+                    <input type="radio" name="concentration" value="2"> Sometimes<br>
+                    <input type="radio" name="concentration" value="3"> Often<br>
+                    <button type="button" onclick="showPage(6)">Next</button>
+                </div>
+
+                <!-- Page 6: Question 5 -->
+                <div class="page" id="page6">
+                    <label>How often do you experience intrusive thoughts?</label><br>
+                    <input type="radio" name="intrusive_thoughts" value="0" required> Never<br>
+                    <input type="radio" name="intrusive_thoughts" value="1"> Rarely<br>
+                    <input type="radio" name="intrusive_thoughts" value="2"> Sometimes<br>
+                    <input type="radio" name="intrusive_thoughts" value="3"> Often<br>
+                    <button type="button" onclick="showPage(7)">Next</button>
+                </div>
+
+                <!-- Page 7: Question 6 -->
+                <div class="page" id="page7">
+                    <label>Do you experience physical symptoms?</label><br>
+                    <input type="radio" name="physical_symptoms" value="0" required> No<br>
+                    <input type="radio" name="physical_symptoms" value="1"> Yes<br>
+                    <button type="button" onclick="showPage(8)">Next</button>
+                </div>
+
+                <!-- Page 8: Question 7 -->
+                <div class="page" id="page8">
+                    <label>How would you rate your social avoidance?</label><br>
+                    <input type="radio" name="social_engagement" value="0" required> No avoidance<br>
+                    <input type="radio" name="social_engagement" value="1"> Occasional avoidance<br>
+                    <input type="radio" name="social_engagement" value="2"> Frequent avoidance<br>
+                    <input type="radio" name="social_engagement" value="3"> Persistent avoidance<br>
+                    <button type="button" onclick="showPage('Final')">Next</button>
+                </div>
+                
+                <!-- Final Page: Submit -->
+                <div class="page" id="pageFinal">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="box">
+            <h2>About Us</h2>
+            <p>Explore our range of therapeutic music services designed to bring harmony and healing.</p>
+        </div>
+        <div class="box">
+            <h2>Services</h2>
+            <p>Explore our range of therapeutic music services designed to bring harmony and healing.</p>
+        </div>
+        <div class="box">
+            <h2>Contact Us</h2>
+            <p>Get in touch with us to learn more or to book a session.</p>
+        </div>
+
+    <script>
+        // JavaScript function to control page navigation
+        function showPage(pageNumber) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.style.display = 'none');
+            document.getElementById('page' + pageNumber).style.display = 'block';
+        }
+    </script>
+</body>
+</html>

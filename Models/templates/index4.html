@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home Page</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: white;
+            }
+            header {
+                background-color: #3E3232;
+                color: white;
+                padding: 10px;
+                text-align: center;
+                position: relative;
+                animation: slideDown 0.5s ease-in-out;
+            }
+            .hello {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background-color: #ffeb3b;
+                padding: 5px 10px;
+                border-radius: 5px;
+                font-size: 16px;
+                animation: fadeIn 1s ease-in-out;
+            }
+            nav {
+                background-color: #503C3C;
+                color: white;
+                padding: 10px;
+                text-align: center;
+            }
+            .main-content {
+                display: flex;
+                justify-content: center;
+                padding: 20px;
+                gap: 20px;
+            }
+            .container {
+                width: 20%;
+                animation: popIn 0.5s ease-in-out;
+            }
+            .card-container {
+                width: 500px;
+                height: 570px;
+                perspective: 1000px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .card-inner {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                transform-style: preserve-3d;
+                transition: transform 1s;
+            }
+            .page {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 25px;
+                font-size: 25px;
+                border: 1px solid #ccc;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                border-radius: 25px;
+                transition: transform 0.6s;
+            }
+            .page:nth-child(odd) {
+                background-color: #A87C7C;
+            }
+            .page:nth-child(even) {
+                background-color: #A87C7C;
+                color: black;
+                transform: rotateY(180deg);
+            }
+            
+            .sidebar {
+                width: 300px;
+                padding: 20px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            .box {
+                margin-bottom: 20px;
+                background-color: white;
+                padding: 20px;
+                box-shadow: 0 2px 5px #503C3C;
+                border-radius: 15px;
+                animation: popIn 0.5s ease-in-out;
+            }
+            .box1 {
+                margin-bottom: 20px;
+                background-color: white;
+                padding: 20px;
+                box-shadow: 0 4px 15px #503C3C;
+                height: 570px;
+                border-radius: 15px;
+                animation: popIn 0.5s ease-in-out;
+            }
+            .pagination {
+                margin-top: 20px;
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                padding: 10px;
+            }
+            .pagination button {
+                padding: 10px;
+                background-color: black;
+                color: #7E6363;
+                border: none;
+                cursor: pointer;
+                outline: none;
+            }
+            .pagination button:hover {
+                background-color: #4CAF50;
+            }
+            #submitButton {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                cursor: pointer;
+                margin-top: 20px;
+                align-self: center;
+                transition: background-color 0.3s, transform 0.3s;
+            }
+            #submitButton:hover {
+                background-color: #45a049;
+                transform: translateY(-2px);
+            }
+            .clearfix::after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+            footer {
+                background-color: #3E3232;
+                color: white;
+                padding: 10px;
+                text-align: center;
+                clear: both;
+            }
+            .page > div {
+                margin-bottom: 10px;
+            }
+            #responseModal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgba(0,0,0,0.4);
+                justify-content: center;
+                align-items: center;
+            }
+            .modal-content {
+                background-color: #fefefe;
+                padding: 20px;
+                border: 1px solid #503C3C;
+                border-radius: 10px;
+                width: 80%;
+                max-width: 500px;
+                text-align: center;
+            }
+            .button-container {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+                margin-top: 10px;
+                height: 100vh;
+                align-items: center;
+            }
+            .button-container button {
+                padding: 10px;
+                font-size: 15px;
+                background-color: #503C3C;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s, transform 0.3s;
+            }
+            .button-container button:hover {
+                background-color: #5a4a4a;
+                transform: translateY(-2px);
+            }
+            .button-container1 {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+            button {
+                padding: 10px;
+                font-size: 15px;
+                background-color: #503C3C;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s, transform 0.3s;
+            }
+            button:hover {
+                background-color: #5a4a4a;
+                transform: translateY(-2px);
+            }
+            @keyframes slideDown {
+                from {
+                    transform: translateY(-100%);
+                }
+                to {
+                    transform: translateY(0);
+                }
+            }
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+            @keyframes popIn {
+                from {
+                    transform: scale(0.5);
+                    opacity: 0;
+                }
+                to {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+        </style>
+    </head>
+    
+<body>
+    <header>
+        <h1>Welcome to TuneMend</h1>
+    </header>
+    <nav>
+        <ul style="list-style-type: none; padding: 0;">
+            <li style="display: inline; margin: 0 10px;"><a href="#" style="color: white; text-decoration: none;">Home</a></li>
+            <li style="display: inline; margin: 0 10px;"><a href="#" style="color: white; text-decoration: none;">About</a></li>
+            <li style="display: inline; margin: 0 10px;"><a href="#" style="color: white; text-decoration: none;">Services</a></li>
+            <li style="display: inline; margin: 0 10px;"><a href="#" style="color: white; text-decoration: none;">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="main-content clearfix">
+        <div class="container">
+            <div class="box1">
+                <h2>Hello, User!</h2>
+                <p>Welcome to TuneMend. We’re glad you’re here!</p>
+            </div>
+        </div>
+        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+            <form action="{{ url_for('index4') }}" method="post" id="surveyForm">
+                <div class="card-container">
+                    <div class="card-inner" id="card-inner">
+                    <div class="page" id="page1">
+                        <h2>Survey Form</h2>
+                        <p>Answer the following questions to assess your mental health.</p>
+                        <div class="button-container1"> 
+                            <button type="button" onclick="showPage(2)">Start</button> 
+                        </div>
+                    </div>
+
+                    <div class="page" id="page2">
+                            <label>How often do you experience sleep issues?</label><br>
+                            <label><input type="radio" name="sleep_issues" value="0"> Never</label><br>
+                            <label><input type="radio" name="sleep_issues" value="1"> Rarely</label><br>
+                            <label><input type="radio" name="sleep_issues" value="2"> Sometimes</label><br>
+                            <label><input type="radio" name="sleep_issues" value="3"> Often</label><br>
+                            <label><input type="radio" name="sleep_issues" value="4"> Always</label><br>
+
+                            <div class="button-container"> 
+                                <button type="button" onclick="showPage(1)">Prev</button> 
+                                <button type="button" onclick="showPage(3)">Next</button> 
+                            </div>
+                            
+                    </div>
+
+                    <div class="page" id="page3">
+                        <label>How would you rate your mood changes?</label><br>
+                        <label><input type="radio" name="mood_changes" value="0" required> No noticeable changes</label><br>
+                        <label><input type="radio" name="mood_changes" value="1"> Occasional mood changes</label><br>
+                        <label><input type="radio" name="mood_changes" value="2"> Frequent mood changes</label><br>
+                        <label><input type="radio" name="mood_changes" value="3"> Persistent feelings of sadness/hopelessness</label><br>
+
+                        <div class="button-container"> 
+                            <button type="button" onclick="showPage(2)">Prev</button> 
+                            <button type="button" onclick="showPage(4)">Next</button> 
+                        </div>
+                    </div>
+
+                    <div class="page" id="page4">
+                        <label>How would you rate your energy levels?</label><br>
+
+                        <label><input type="radio" name="energy_levels" value="1" required> 1</label>
+                        <label><input type="radio" name="energy_levels" value="2"> 2</label>
+                        <label><input type="radio" name="energy_levels" value="3"> 3</label>
+                        <label><input type="radio" name="energy_levels" value="4"> 4</label>
+                        <label><input type="radio" name="energy_levels" value="5"> 5</label>
+                        <label><input type="radio" name="energy_levels" value="6"> 6</label>
+                        <label><input type="radio" name="energy_levels" value="7"> 7</label>
+                        <label><input type="radio" name="energy_levels" value="8"> 8</label>
+                        <label><input type="radio" name="energy_levels" value="9"> 9</label>
+                        <label><input type="radio" name="energy_levels" value="10"> 10</label>
+                        
+                        
+                        <div class="button-container"> 
+                            <button type="button" onclick="showPage(3)">Prev</button> 
+                            <button type="button" onclick="showPage(5)">Next</button> 
+                        </div>
+                    </div>
+
+                    <div class="page" id="page5">
+                        <label>How often do you experience difficulty concentrating?</label><br>
+
+                        <label><input type="radio" name="concentration" value="0" required> Never</label><br>
+                        <label><input type="radio" name="concentration" value="1"> Rarely</label><br>
+                        <label><input type="radio" name="concentration" value="2"> Sometimes</label><br>
+                        <label><input type="radio" name="concentration" value="3"> Often</label><br>
+                        
+                        <div class="button-container"> 
+                            <button type="button" onclick="showPage(4)">Prev</button> 
+                            <button type="button" onclick="showPage(6)">Next</button> 
+                        </div>
+                    </div>
+    
+                    <div class="page" id="page6">
+                        <label>How often do you experience intrusive thoughts?</label><br>
+
+                        <label><input type="radio" name="intrusive_thoughts" value="0" required> Never</label><br>
+                        <label><input type="radio" name="intrusive_thoughts" value="1"> Rarely</label><br>
+                        <label><input type="radio" name="intrusive_thoughts" value="2"> Sometimes</label><br>
+                        <label><input type="radio" name="intrusive_thoughts" value="3"> Often</label><br>
+                        
+                        <div class="button-container"> 
+                            <button type="button" onclick="showPage(5)">Prev</button> 
+                            <button type="button" onclick="showPage(7)">Next</button> 
+                        </div>
+                    </div>
+
+                    <div class="page" id="page7">
+                        <label>Do you experience physical symptoms?</label><br>
+
+                        <label><input type="radio" name="physical_symptoms" value="0" required> No</label><br>
+                        <label><input type="radio" name="physical_symptoms" value="1"> Yes</label><br>
+                        
+                        <div class="button-container"> 
+                            <button type="button" onclick="showPage(6)">Prev</button> 
+                            <button type="button" onclick="showPage(8)">Next</button> 
+                        </div>
+                    </div>
+
+                      <div class="page" id="page8">
+                        <label>How would you rate your social avoidance?</label><br>
+
+                        <label><input type="radio" name="social_engagement" value="0" required> No avoidance</label><br>
+                        <label><input type="radio" name="social_engagement" value="1"> Occasional avoidance</label><br>
+                        <label><input type="radio" name="social_engagement" value="2"> Frequent avoidance</label><br>
+                        <label><input type="radio" name="social_engagement" value="3"> Complete avoidance</label><br>
+                        <div class="button-container"> 
+                            <button type="button" onclick="showPage(7)">Prev</button> 
+                            <button type="submit">Submit Survey</button> 
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+            
+        <div class="sidebar">
+            <div class="box">
+                <h2>About Us</h2>
+                <p>Explore our range of therapeutic music services designed to bring harmony and healing.</p>
+            </div>
+            <div class="box">
+                <h2>Services</h2>
+                <p>Explore our range of therapeutic music services designed to bring harmony and healing.</p>
+            </div>
+            <div class="box">
+                <h2>Contact Us</h2>
+                <p>Get in touch with us to learn more or to book a session.</p>
+            </div>
+        </div>
+    </div>
+    <div id="responseModal">
+        <div class="modal-content">
+            <h2>Survey Submitted</h2>
+            <p id="surveyResults"></p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 TuneMend. All rights reserved.</p>
+    </footer>
+    <script>
+let currentPage = 1;
+const totalPages = 8;
+
+function showPage(page) {
+    const pages = document.querySelectorAll('.page');
+    const cardInner = document.getElementById('card-inner');
+    cardInner.style.transform = `rotateY(${(page - 1) * 180}deg)`;
+    pages.forEach((p, index) => {
+        if (index + 1 === page) {
+            p.style.visibility = 'visible';
+        } else {
+            p.style.visibility = 'hidden';
+        }
+    });
+}
+
+
+function closeModal() {
+    document.getElementById("responseModal").style.display = "none";
+}
+
+// Initialize by showing the first page
+showPage(currentPage);
+
+// Remove the onsubmit handler to allow normal form submission
+
+</script>
+</body>
+</html>

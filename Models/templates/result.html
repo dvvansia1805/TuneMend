@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Therapy Results</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            animation: fadeIn 1s ease-in-out;
+        }
+        h1, h2 {
+            color: black;
+        }
+        .score-container {
+            background-color: #A87C7C;
+            padding: 20px;
+            border-radius: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: slideIn 1s ease-in-out;
+        }
+        .score-item {
+            margin: 10px 0;
+        }
+        .spotify-container {
+            margin: 30px 0;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .severity-high {
+            color: #000000;
+        }
+        .severity-medium {
+            color: #000000;
+        }
+        .severity-low {
+            color: #000000;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #3E3232;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.3s;
+            animation: bounceIn 1.5s ease-in-out;
+        }
+        .back-button:hover {
+            background-color: #7E6363;
+            transform: translateY(-2px);
+        }
+        .back-button:active {
+            background-color: #3E3232;
+            transform: translateY(1px);
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #e0f7fa;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            animation: popIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes bounceIn {
+            0%, 20%, 40%, 60%, 80%, 100% {
+                -webkit-transform: translateY(0); 
+                -ms-transform: translateY(0); 
+                transform: translateY(0);
+            }
+            40% { 
+                -webkit-transform: translateY(-30px); 
+                -ms-transform: translateY(-30px); 
+                transform: translateY(-30px);
+            }
+            60% {
+                -webkit-transform: translateY(-15px); 
+                -ms-transform: translateY(-15px); 
+                transform: translateY(-15px);
+            }
+        }
+        @keyframes popIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Music Therapy Analysis Results</h1>
+
+    <!-- Primary Condition Section -->
+    <div class="score-container">
+        <h2>Primary Condition</h2>
+        <p><strong>{{ result.predicted_condition }}</strong></p>
+        
+        <!-- Severity Score with color coding -->
+        <p>Overall Severity Score: 
+            <strong class="
+                {%- if result.severity_score >= 7 -%}
+                    severity-high
+                {%- elif result.severity_score >= 4 -%}
+                    severity-medium
+                {%- else -%}
+                    severity-low
+                {%- endif -%}">
+                {{ "%.1f"|format(result.severity_score) }}/10
+            </strong>
+        </p>
+    </div>
+
+    <!-- Detailed Scores Section -->
+    <div class="score-container">
+        <h2>Detailed Analysis</h2>
+        {% for condition, score in result.condition_scores.items() %}
+        <div class="score-item">
+            <strong>{{ condition }}:</strong> 
+            <span class="
+                {%- if score >= 7 -%}
+                    severity-high
+                {%- elif score >= 4 -%}
+                    severity-medium
+                {%- else -%}
+                    severity-low
+                {%- endif -%}">
+                {{ "%.1f"|format(score) }}/10
+            </span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Music Recommendations Section -->
+    <div class="score-container">
+        <h2>Recommended Music Genres</h2>
+        <p>Based on your results, we recommend these genres:</p>
+        <ul>
+            {% for genre in result.recommended_genres %}
+            <li>{{ genre }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Spotify Playlist Section -->
+    <div class="spotify-container">
+        <h2>Personalized Spotify Playlist</h2>
+        {% if result.playlist_url %}
+            <iframe 
+                src="{{ result.playlist_url }}" 
+                width="100%" 
+                height="380" 
+                frameborder="0" 
+                allowtransparency="true" 
+                allow="encrypted-media"
+                style="border-radius: 8px;">
+            </iframe>
+        {% else %}
+            <p>No specific playlist is currently available for your condition. Try our recommended genres instead!</p>
+        {% endif %}
+    </div>
+
+    <!-- Navigation -->
+    <a href="{{ url_for('index4') }}"class="back-button">Take Survey Again</a>
+
+    {% if not session.get('access_token') %}
+    <p>
+        <a href="{{ url_for('login') }}" class="back-button" style="background-color: #3E3232;">
+            Connect with Spotify
+        </a>
+    </p>
+    {% endif %}
+</body>
+</html>
